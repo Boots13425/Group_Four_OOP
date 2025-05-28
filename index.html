@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Grades Management Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="university-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>University Portal</h1>
+                </div>
+                <p>Grades Management Platform</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <span class="error-message" id="usernameError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userRole">Login as</label>
+                    <select id="userRole" name="userRole" required>
+                        <option value="">Select Role</option>
+                        <option value="student">Student</option>
+                        <option value="professor">Professor</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="studentDashboard" class="screen">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Student Portal</span>
+            </div>
+            <div class="nav-user">
+                <span>Welcome, Ngwa Agbor</span>
+                <button class="btn btn-secondary" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <ul class="nav-menu">
+                    <li><a href="#" onclick="showStudentSection('overview')" class="active">
+                        <i class="fas fa-tachometer-alt"></i> Overview
+                    </a></li>
+                    <li><a href="#" onclick="showStudentSection('courses')">
+                        <i class="fas fa-book"></i> Course Registration
+                    </a></li>
+                    <li><a href="#" onclick="showStudentSection('grades')">
+                        <i class="fas fa-chart-line"></i> View Grades
+                    </a></li>
+                    <li><a href="#" onclick="showStudentSection('export')">
+                        <i class="fas fa-download"></i> Export Data
+                    </a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <!-- Student Overview -->
+                <div id="studentOverview" class="content-section active">
+                    <h2>Dashboard Overview</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-book"></i>
+                            <div>
+                                <h3>5</h3>
+                                <p>Enrolled Courses</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-star"></i>
+                            <div>
+                                <h3>3.7</h3>
+                                <p>Current GPA</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-trophy"></i>
+                            <div>
+                                <h3>85%</h3>
+                                <p>Average Grade</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-grades">
+                        <h3>Recent Grades</h3>
+                        <div class="grade-list">
+                            <div class="grade-item">
+                                <span class="course">Computer Science 101</span>
+                                <span class="grade grade-a">A</span>
+                            </div>
+                            <div class="grade-item">
+                                <span class="course">Mathematics 201</span>
+                                <span class="grade grade-b">B+</span>
+                            </div>
+                            <div class="grade-item">
+                                <span class="course">Physics 150</span>
+                                <span class="grade grade-a">A-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Registration -->
+                <div id="studentCourses" class="content-section">
+                    <h2>Course Registration</h2>
+                    <div class="course-search">
+                        <input type="text" placeholder="Search courses..." id="courseSearch">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="course-grid">
+                        <div class="course-card">
+                            <h4>Advanced Programming</h4>
+                            <p>CS 301 - Prof. Smith</p>
+                            <p>Credits: 3 | Schedule: MWF 10:00-11:00</p>
+                            <button class="btn btn-primary" onclick="registerCourse('CS301')">
+                                <i class="fas fa-plus"></i> Register
+                            </button>
+                        </div>
+                        <div class="course-card">
+                            <h4>Database Systems</h4>
+                            <p>CS 350 - Prof. Johnson</p>
+                            <p>Credits: 4 | Schedule: TTh 2:00-4:00</p>
+                            <button class="btn btn-primary" onclick="registerCourse('CS350')">
+                                <i class="fas fa-plus"></i> Register
+                            </button>
+                        </div>
+                        <div class="course-card">
+                            <h4>Web Development</h4>
+                            <p>CS 280 - Prof. Davis</p>
+                            <p>Credits: 3 | Schedule: MWF 1:00-2:00</p>
+                            <button class="btn btn-primary" onclick="registerCourse('CS280')">
+                                <i class="fas fa-plus"></i> Register
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View Grades -->
+                <div id="studentGrades" class="content-section">
+                    <h2>Grade History</h2>
+                    <div class="semester-tabs">
+                        <button class="tab-btn active" onclick="showSemester('current')">Current Semester</button>
+                        <button class="tab-btn" onclick="showSemester('previous')">Previous Semesters</button>
+                    </div>
+                    
+                    <div class="grades-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Credits</th>
+                                    <th>Grade</th>
+                                    <th>Points</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Computer Science 101</td>
+                                    <td>3</td>
+                                    <td><span class="grade grade-a">A</span></td>
+                                    <td>4.0</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Mathematics 201</td>
+                                    <td>4</td>
+                                    <td><span class="grade grade-b">B+</span></td>
+                                    <td>3.3</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Physics 150</td>
+                                    <td>3</td>
+                                    <td><span class="grade grade-a">A-</span></td>
+                                    <td>3.7</td>
+                                    <td><span class="status in-progress">In Progress</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Export Data -->
+                <div id="studentExport" class="content-section">
+                    <h2>Export Grade Data</h2>
+                    <div class="export-options">
+                        <div class="export-card">
+                            <i class="fas fa-file-pdf"></i>
+                            <h4>PDF Transcript</h4>
+                            <p>Official transcript with all grades</p>
+                            <button class="btn btn-primary" onclick="exportData('pdf')">
+                                <i class="fas fa-download"></i> Download PDF
+                            </button>
+                        </div>
+                        <div class="export-card">
+                            <i class="fas fa-file-excel"></i>
+                            <h4>Excel Spreadsheet</h4>
+                            <p>Detailed grade data in Excel format</p>
+                            <button class="btn btn-primary" onclick="exportData('excel')">
+                                <i class="fas fa-download"></i> Download Excel
+                            </button>
+                        </div>
+                        <div class="export-card">
+                            <i class="fas fa-file-csv"></i>
+                            <h4>CSV File</h4>
+                            <p>Raw data for analysis</p>
+                            <button class="btn btn-primary" onclick="exportData('csv')">
+                                <i class="fas fa-download"></i> Download CSV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Professor Dashboard -->
+    <div id="professorDashboard" class="screen">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Professor Portal</span>
+            </div>
+            <div class="nav-user">
+                <span>Welcome, Dr. Smith</span>
+                <button class="btn btn-secondary" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <ul class="nav-menu">
+                    <li><a href="#" onclick="showProfessorSection('overview')" class="active">
+                        <i class="fas fa-tachometer-alt"></i> Overview
+                    </a></li>
+                    <li><a href="#" onclick="showProfessorSection('upload')">
+                        <i class="fas fa-upload"></i> Upload Marks
+                    </a></li>
+                    <li><a href="#" onclick="showProfessorSection('update')">
+                        <i class="fas fa-edit"></i> Update Marks
+                    </a></li>
+                    <li><a href="#" onclick="showProfessorSection('gpa')">
+                        <i class="fas fa-calculator"></i> Calculate GPA
+                    </a></li>
+                    <li><a href="#" onclick="showProfessorSection('notifications')">
+                        <i class="fas fa-bell"></i> Notifications
+                    </a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <!-- Professor Overview -->
+                <div id="professorOverview" class="content-section active">
+                    <h2>Professor Dashboard</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h3>120</h3>
+                                <p>Total Students</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-book"></i>
+                            <div>
+                                <h3>3</h3>
+                                <p>Courses Teaching</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-clipboard-check"></i>
+                            <div>
+                                <h3>85%</h3>
+                                <p>Grades Submitted</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-overview">
+                        <h3>My Courses</h3>
+                        <div class="course-list">
+                            <div class="course-item">
+                                <h4>Computer Science 101</h4>
+                                <p>45 students enrolled</p>
+                                <div class="course-actions">
+                                    <button class="btn btn-sm btn-primary">View Students</button>
+                                    <button class="btn btn-sm btn-secondary">Grade Book</button>
+                                </div>
+                            </div>
+                            <div class="course-item">
+                                <h4>Advanced Programming</h4>
+                                <p>38 students enrolled</p>
+                                <div class="course-actions">
+                                    <button class="btn btn-sm btn-primary">View Students</button>
+                                    <button class="btn btn-sm btn-secondary">Grade Book</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Marks -->
+                <div id="professorUpload" class="content-section">
+                    <h2>Upload Student Marks</h2>
+                    <form class="upload-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="courseSelect">Select Course</label>
+                                <select id="courseSelect" required>
+                                    <option value="">Choose Course</option>
+                                    <option value="cs101">Computer Science 101</option>
+                                    <option value="cs301">Advanced Programming</option>
+                                    <option value="cs350">Database Systems</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignmentType">Assignment Type</label>
+                                <select id="assignmentType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="exam">Exam</option>
+                                    <option value="assignment">Assignment</option>
+                                    <option value="quiz">Quiz</option>
+                                    <option value="project">Project</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="upload-methods">
+                            <div class="upload-option">
+                                <h4>Bulk Upload (CSV)</h4>
+                                <input type="file" id="csvFile" accept=".csv">
+                                <button type="button" class="btn btn-primary" onclick="uploadCSV()">
+                                    <i class="fas fa-upload"></i> Upload CSV
+                                </button>
+                            </div>
+                            
+                            <div class="upload-option">
+                                <h4>Manual Entry</h4>
+                                <div class="student-grades">
+                                    <div class="grade-entry">
+                                        <input type="text" placeholder="Student ID" class="student-id">
+                                        <input type="number" placeholder="Grade" class="grade-input" min="0" max="100">
+                                        <button type="button" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addGradeEntry()">
+                                    <i class="fas fa-plus"></i> Add Student
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Grades
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Update Marks -->
+                <div id="professorUpdate" class="content-section">
+                    <h2>Update Student Marks</h2>
+                    <div class="search-filters">
+                        <input type="text" placeholder="Search by student name or ID..." id="studentSearch">
+                        <select id="courseFilter">
+                            <option value="">All Courses</option>
+                            <option value="cs101">Computer Science 101</option>
+                            <option value="cs301">Advanced Programming</option>
+                        </select>
+                    </div>
+                    
+                    <div class="students-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Current Grade</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>STU001</td>
+                                    <td>Ngwa Agbor</td>
+                                    <td>CS 101</td>
+                                    <td>85</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="editGrade('STU001')">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>STU002</td>
+                                    <td>Sirri Babash</td>
+                                    <td>CS 101</td>
+                                    <td>92</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="editGrade('STU002')">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Calculate GPA -->
+                <div id="professorGpa" class="content-section">
+                    <h2>GPA Calculator</h2>
+                    <div class="gpa-calculator">
+                        <div class="calculator-form">
+                            <div class="form-group">
+                                <label for="gpaStudent">Select Student</label>
+                                <select id="gpaStudent">
+                                    <option value="">Choose Student</option>
+                                    <option value="stu001">Ngwa Agbor (STU001)</option>
+                                    <option value="stu002">Sirri Babash (STU002)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="gpaSemester">Semester</label>
+                                <select id="gpaSemester">
+                                    <option value="current">Current Semester</option>
+                                    <option value="all">All Semesters</option>
+                                </select>
+                            </div>
+                            
+                            <button class="btn btn-primary" onclick="calculateGPA()">
+                                <i class="fas fa-calculator"></i> Calculate GPA
+                            </button>
+                        </div>
+                        
+                        <div class="gpa-results" id="gpaResults" style="display: none;">
+                            <h4>GPA Results</h4>
+                            <div class="gpa-display">
+                                <div class="gpa-value">3.75</div>
+                                <div class="gpa-label">Current GPA</div>
+                            </div>
+                            <div class="grade-breakdown">
+                                <h5>Grade Breakdown</h5>
+                                <div class="breakdown-item">
+                                    <span>A grades: 3 courses</span>
+                                    <span>12 credit hours</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span>B grades: 2 courses</span>
+                                    <span>7 credit hours</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div id="professorNotifications" class="content-section">
+                    <h2>Send Grade Notifications</h2>
+                    <form class="notification-form">
+                        <div class="form-group">
+                            <label for="notificationCourse">Select Course</label>
+                            <select id="notificationCourse" required>
+                                <option value="">Choose Course</option>
+                                <option value="cs101">Computer Science 101</option>
+                                <option value="cs301">Advanced Programming</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notificationType">Notification Type</label>
+                            <select id="notificationType" required>
+                                <option value="">Select Type</option>
+                                <option value="grade_posted">Grade Posted</option>
+                                <option value="assignment_graded">Assignment Graded</option>
+                                <option value="exam_results">Exam Results</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notificationMessage">Message</label>
+                            <textarea id="notificationMessage" rows="4" placeholder="Enter your message to students..."></textarea>
+                        </div>
+                        
+                        <div class="recipient-options">
+                            <label>
+                                <input type="radio" name="recipients" value="all" checked>
+                                All Students in Course
+                            </label>
+                            <label>
+                                <input type="radio" name="recipients" value="specific">
+                                Specific Students
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Notification
+                        </button>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="screen">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-cog"></i>
+                <span>Admin Portal</span>
+            </div>
+            <div class="nav-user">
+                <span>Welcome, Administrator</span>
+                <button class="btn btn-secondary" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <ul class="nav-menu">
+                    <li><a href="#" onclick="showAdminSection('overview')" class="active">
+                        <i class="fas fa-tachometer-alt"></i> Overview
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('users')">
+                        <i class="fas fa-users"></i> Manage Users
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('courses')">
+                        <i class="fas fa-book"></i> Manage Courses
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('enrollment')">
+                        <i class="fas fa-user-plus"></i> Enrollment
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('policy')">
+                        <i class="fas fa-file-alt"></i> Grades Policy
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('config')">
+                        <i class="fas fa-cogs"></i> System Config
+                    </a></li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <!-- Admin Overview -->
+                <div id="adminOverview" class="content-section active">
+                    <h2>System Overview</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h3>1,250</h3>
+                                <p>Total Students</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <div>
+                                <h3>85</h3>
+                                <p>Professors</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-book"></i>
+                            <div>
+                                <h3>150</h3>
+                                <p>Active Courses</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <h3>3.2</h3>
+                                <p>Average GPA</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="system-status">
+                        <h3>System Status</h3>
+                        <div class="status-grid">
+                            <div class="status-item">
+                                <i class="fas fa-server status-online"></i>
+                                <span>Database: Online</span>
+                            </div>
+                            <div class="status-item">
+                                <i class="fas fa-cloud status-online"></i>
+                                <span>Backup: Active</span>
+                            </div>
+                            <div class="status-item">
+                                <i class="fas fa-shield-alt status-online"></i>
+                                <span>Security: Secure</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manage Users -->
+                <div id="adminUsers" class="content-section">
+                    <h2>User Management</h2>
+                    <div class="user-controls">
+                        <button class="btn btn-primary" onclick="showAddUserModal()">
+                            <i class="fas fa-plus"></i> Add User
+                        </button>
+                        <div class="search-filter">
+                            <input type="text" placeholder="Search users..." id="userSearch">
+                            <select id="userRoleFilter">
+                                <option value="">All Roles</option>
+                                <option value="student">Students</option>
+                                <option value="professor">Professors</option>
+                                <option value="admin">Administrators</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="users-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>STU001</td>
+                                    <td>Ngwa Agbor</td>
+                                    <td>john.doe@university.edu</td>
+                                    <td><span class="role student">Student</span></td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="editUser('STU001')">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteUser('STU001')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>PROF001</td>
+                                    <td>Dr. Smith</td>
+                                    <td>smith@university.edu</td>
+                                    <td><span class="role professor">Professor</span></td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="editUser('PROF001')">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteUser('PROF001')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Manage Courses -->
+                <div id="adminCourses" class="content-section">
+                    <h2>Course Management</h2>
+                    <div class="course-controls">
+                        <button class="btn btn-primary" onclick="showAddCourseModal()">
+                            <i class="fas fa-plus"></i> Add Course
+                        </button>
+                        <div class="search-filter">
+                            <input type="text" placeholder="Search courses..." id="courseSearchAdmin">
+                            <select id="departmentFilter">
+                                <option value="">All Departments</option>
+                                <option value="cs">Computer Science</option>
+                                <option value="math">Mathematics</option>
+                                <option value="physics">Physics</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="courses-grid">
+                        <div class="course-card-admin">
+                            <h4>Computer Science 101</h4>
+                            <p><strong>Code:</strong> CS101</p>
+                            <p><strong>Credits:</strong> 3</p>
+                            <p><strong>Professor:</strong> Dr. Smith</p>
+                            <p><strong>Enrolled:</strong> 45/50</p>
+                            <div class="course-actions">
+                                <button class="btn btn-sm btn-primary" onclick="editCourse('CS101')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteCourse('CS101')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="course-card-admin">
+                            <h4>Advanced Programming</h4>
+                            <p><strong>Code:</strong> CS301</p>
+                            <p><strong>Credits:</strong> 4</p>
+                            <p><strong>Professor:</strong> Dr. Johnson</p>
+                            <p><strong>Enrolled:</strong> 38/40</p>
+                            <div class="course-actions">
+                                <button class="btn btn-sm btn-primary" onclick="editCourse('CS301')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteCourse('CS301')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enrollment Management -->
+                <div id="adminEnrollment" class="content-section">
+                    <h2>Enrollment Management</h2>
+                    <div class="enrollment-tools">
+                        <div class="bulk-enrollment">
+                            <h4>Bulk Enrollment</h4>
+                            <input type="file" id="enrollmentFile" accept=".csv">
+                            <button class="btn btn-primary" onclick="bulkEnrollment()">
+                                <i class="fas fa-upload"></i> Upload Enrollment
+                            </button>
+                        </div>
+                        
+                        <div class="manual-enrollment">
+                            <h4>Manual Enrollment</h4>
+                            <form class="enrollment-form">
+                                <select id="enrollStudent" required>
+                                    <option value="">Select Student</option>
+                                    <option value="stu001">Ngwa Agbor</option>
+                                    <option value="stu002">Sirri Babash</option>
+                                </select>
+                                <select id="enrollCourse" required>
+                                    <option value="">Select Course</option>
+                                    <option value="cs101">CS 101</option>
+                                    <option value="cs301">CS 301</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-user-plus"></i> Enroll
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="enrollment-stats">
+                        <h4>Enrollment Statistics</h4>
+                        <div class="stats-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Course</th>
+                                        <th>Capacity</th>
+                                        <th>Enrolled</th>
+                                        <th>Available</th>
+                                        <th>Waitlist</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CS 101</td>
+                                        <td>50</td>
+                                        <td>45</td>
+                                        <td>5</td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>CS 301</td>
+                                        <td>40</td>
+                                        <td>38</td>
+                                        <td>2</td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grades Policy -->
+                <div id="adminPolicy" class="content-section">
+                    <h2>Grades Policy Configuration</h2>
+                    <form class="policy-form">
+                        <div class="policy-section">
+                            <h4>Grade Scale</h4>
+                            <div class="grade-scale">
+                                <div class="grade-range">
+                                    <label>A: </label>
+                                    <input type="number" value="80" min="80" max="100"> - 100
+                                </div>
+                                <div class="grade-range">
+                                    <label>B+: </label>
+                                    <input type="number" value="70" min="70" max="79"> - 79
+                                </div>
+                                <div class="grade-range">
+                                    <label>B: </label>
+                                    <input type="number" value="60" min="60" max="69"> - 69
+                                </div>
+                                <div class="grade-range">
+                                    <label>C+: </label>
+                                    <input type="number" value="55" min="55" max="59"> - 59
+                                </div>
+                                <div class="grade-range">
+                                    <label>C: </label>
+                                    <input type="number" value="50" min="50" max="55"> - 55
+                                </div>
+                                 <div class="grade-range">
+                                    <label>D+: </label>
+                                    <input type="number" value="45" min="45" max="45"> - 49
+                                </div>
+                                <div class="grade-range">
+                                    <label>D: </label>
+                                    <input type="number" value="40" min="40" max="45"> - 45
+                                </div>
+                                <div class="grade-range">
+                                    <label>F: </label>
+                                    0 - <input type="number" value="39" min="0" max="39">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="policy-section">
+                            <h4>GPA Calculation</h4>
+                            <div class="gpa-settings">
+                                <label>
+                                    <input type="checkbox" checked> Include + and - grades
+                                </label>
+                                <label>
+                                    <input type="checkbox" checked> Weight by credit hours
+                                </label>
+                                <label>
+                                    <input type="checkbox"> Include transfer credits
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="policy-section">
+                            <h4>Grade Submission</h4>
+                            <div class="submission-settings">
+                                <div class="form-group">
+                                    <label>Deadline for midterm grades:</label>
+                                    <input type="date" value="2024-03-15">
+                                </div>
+                                <div class="form-group">
+                                    <label>Deadline for final grades:</label>
+                                    <input type="date" value="2024-05-15">
+                                </div>
+                                <label>
+                                    <input type="checkbox" checked> Send automatic reminders
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Policy
+                        </button>
+                    </form>
+                </div>
+
+                <!-- System Configuration -->
+                <div id="adminConfig" class="content-section">
+                    <h2>System Configuration</h2>
+                    <div class="config-tabs">
+                        <button class="tab-btn active" onclick="showConfigTab('general')">General</button>
+                        <button class="tab-btn" onclick="showConfigTab('security')">Security</button>
+                        <button class="tab-btn" onclick="showConfigTab('backup')">Backup</button>
+                    </div>
+                    
+                    <div class="config-content">
+                        <div id="generalConfig" class="config-tab active">
+                            <h4>General Settings</h4>
+                            <form class="config-form">
+                                <div class="form-group">
+                                    <label>University Name</label>
+                                    <input type="text" value="State University">
+                                </div>
+                                <div class="form-group">
+                                    <label>Academic Year</label>
+                                    <select>
+                                        <option>2023-2024</option>
+                                        <option>2024-2025</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Current Semester</label>
+                                    <select>
+                                        <option>Fall 2024</option>
+                                        <option>Spring 2024</option>
+                                        <option>Summer 2024</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                        
+                        <div id="securityConfig" class="config-tab">
+                            <h4>Security Settings</h4>
+                            <form class="config-form">
+                                <div class="form-group">
+                                    <label>Password Policy</label>
+                                    <div class="checkbox-group">
+                                        <label><input type="checkbox" checked> Minimum 8 characters</label>
+                                        <label><input type="checkbox" checked> Require uppercase</label>
+                                        <label><input type="checkbox" checked> Require numbers</label>
+                                        <label><input type="checkbox"> Require special characters</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Session Timeout (minutes)</label>
+                                    <input type="number" value="30" min="5" max="120">
+                                </div>
+                                <div class="form-group">
+                                    <label>Failed Login Attempts</label>
+                                    <input type="number" value="5" min="3" max="10">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                        
+                        <div id="backupConfig" class="config-tab">
+                            <h4>Backup Settings</h4>
+                            <form class="config-form">
+                                <div class="form-group">
+                                    <label>Automatic Backup</label>
+                                    <select>
+                                        <option>Daily</option>
+                                        <option>Weekly</option>
+                                        <option>Monthly</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Backup Time</label>
+                                    <input type="time" value="02:00">
+                                </div>
+                                <div class="form-group">
+                                    <label>Retention Period (days)</label>
+                                    <input type="number" value="30" min="7" max="365">
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="runBackup()">
+                                    <i class="fas fa-play"></i> Run Backup Now
+                                </button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal for confirmations and forms -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
