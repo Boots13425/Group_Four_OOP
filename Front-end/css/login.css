@@ -1,0 +1,168 @@
+@import url('common.css');
+
+/* Page background */
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  background: var(--surface-color);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--border-radius);
+  padding: 2.5rem 2rem 2rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadein 0.8s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(-30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 1.7rem;
+  width: 100%;
+}
+
+.university-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-bottom: 0.7rem;
+}
+
+.university-logo i {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  filter: drop-shadow(0 2px 8px rgba(37,99,235,0.12));
+}
+
+.university-logo h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--primary-color);
+}
+
+.login-header p {
+  font-size: 1.09rem;
+  color: var(--text-secondary);
+  opacity: 0.95;
+}
+
+.login-form {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.3rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.44rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background: var(--background-color);
+  color: var(--text-primary);
+  transition: var(--transition);
+  box-shadow: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.11);
+  outline: none;
+}
+
+.error-message {
+  color: var(--danger-color);
+  font-size: 0.92rem;
+  margin-top: 0.18rem;
+  min-height: 1.1em;
+  display: block;
+}
+
+.btn.btn-primary {
+  width: 100%;
+  padding: 0.8rem 2rem;
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1.09rem;
+  box-shadow: 0 1px 7px 0 rgba(37, 99, 235, 0.08);
+  margin-top: 0.4rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.btn.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px) scale(1.02);
+}
+
+@media (max-width: 520px) {
+  .login-container {
+    padding: 1.5rem 0.8rem 1.5rem 0.8rem;
+    max-width: 96vw;
+  }
+  .university-logo h1 {
+    font-size: 1.35rem;
+  }
+  .login-header {
+    margin-bottom: 1.1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .login-container {
+    padding: 0.7rem 0.2rem;
+  }
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: var(--success-color);
+  color: #fff;
+  padding: 0.88rem 1.3rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(120%);
+  transition: var(--transition);
+  z-index: 1001;
+  font-size: 1.04rem;
+}
+.toast.show { transform: translateX(0);}
+.toast.error { background: var(--danger-color);}
+.toast.info { background: var(--primary-color);}
