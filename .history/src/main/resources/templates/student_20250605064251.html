@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Student Portal | University Grades</title>
+    <link rel="stylesheet" href="/css/student.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Student Dashboard Menu -->
+    <nav id="studentMenu" class="student-menu">
+      <ul>
+        <li>
+          <a href="#" onclick="showStudentSection('overview')" id="menuOverview" class="active">
+            <i class="fas fa-tachometer-alt"></i> Overview
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showStudentSection('courses')" id="menuCourses">
+            <i class="fas fa-book"></i> Course Registration
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showStudentSection('grades')" id="menuGrades">
+            <i class="fas fa-chart-line"></i> View Grades
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showStudentSection('export')" id="menuExport">
+            <i class="fas fa-download"></i> Export Data
+          </a>
+        </li>
+        <li class="logout-link">
+          <a href="/logout" id="menuLogout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Student Dashboard Main Content -->
+    <div id="studentDashboard" class="screen">
+      <nav class="navbar">
+        <div class="nav-brand">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Student Portal</span>
+        </div>
+        <div class="nav-user">
+          <span id="welcomeMessage">Welcome, Student</span>
+        </div>
+      </nav>
+
+      <div class="dashboard-container">
+        <main class="main-content">
+          <!-- Student Overview -->
+          <div id="studentOverview" class="content-section active">
+            <h2>Dashboard Overview</h2>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <i class="fas fa-book"></i>
+                <div>
+                  <h3 id="enrolledCourses" th:text="${enrolledCourses}">0</h3>
+                  <p>Enrolled Courses</p>
+                </div>
+              </div>
+              <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <div>
+                  <h3 id="currentGpa" th:text="${currentGpa}">0.0</h3>
+                  <p>Current GPA</p>
+                </div>
+              </div>
+              <div class="stat-card">
+                <i class="fas fa-trophy"></i>
+                <div>
+                  <h3 id="averageGrade" th:text="${averageGrade}">0%</h3>
+                  <p>Average Grade</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="recent-grades">
+              <h3>Recent Grades</h3>
+              <div class="grade-list" id="recentGradesList">
+                <div th:each="grade : ${recentGrades}" class="grade-item">
+                  <div class="grade-info">
+                    <h4 th:text="${grade.assignmentName}">Assignment Name</h4>
+                    <p th:text="${grade.enrollment.course.title}">Course Title</p>
+                  </div>
+                  <div class="grade-score" th:text="${grade.score + '%'}">85%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Course Registration -->
+          <div id="studentCourses" class="content-section">
+            <h2>Course Registration</h2>
+            <div class="course-search">
+              <input type="text" placeholder="Search courses..." id="courseSearch" />
+              <button class="btn btn-primary" onclick="loadAvailableCourses()">
+                <i class="fas fa-search"></i> Search
+              </button>
+            </div>
+
+            <div class="course-grid" id="courseGrid">
+              <!-- Courses will be loaded here -->
+            </div>
+          </div>
+
+          <!-- View Grades -->
+          <div id="studentGrades" class="content-section">
+            <h2>Grade History</h2>
+            <div class="grades-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Course</th>
+                    <th>Assignment</th>
+                    <th>Type</th>
+                    <th>Score</th>
+                    <th>Grade</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="gradesTableBody">
+                  <!-- Grades will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Export Data -->
+          <div id="studentExport" class="content-section">
+            <h2>Export Grade Data</h2>
+            <div class="export-options">
+              <div class="export-card">
+                <i class="fas fa-file-pdf"></i>
+                <h4>PDF Transcript</h4>
+                <p>Official transcript with all grades</p>
+                <button class="btn btn-primary" onclick="exportData('pdf')">
+                  <i class="fas fa-download"></i> Download PDF
+                </button>
+              </div>
+              <div class="export-card">
+                <i class="fas fa-file-excel"></i>
+                <h4>Excel Spreadsheet</h4>
+                <p>Detailed grade data in Excel format</p>
+                <button class="btn btn-primary" onclick="exportData('excel')">
+                  <i class="fas fa-download"></i> Download Excel
+                </button>
+              </div>
+              <div class="export-card">
+                <i class="fas fa-file-csv"></i>
+                <h4>CSV File</h4>
+                <p>Raw data for analysis</p>
+                <button class="btn btn-primary" onclick="exportData('csv')">
+                  <i class="fas fa-download"></i> Download CSV
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal for confirmations and forms -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div id="toast" class="toast"></div>
+    <script src="/js/student.js"></script>
+  </body>
+</html>
